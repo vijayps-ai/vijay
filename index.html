@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Vijay Pratap Sharma | IIT Indore</title>
+  <meta name="description" content="Senior Research Fellow & Ph.D. Researcher at IIT Indore specializing in VLSI, Edge-AI, RISC-V and Energy-Efficient Computing.">
+
+  <link rel="icon" href="assets/images/favicon.png">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+  HEADER
+========================================================= -->
+
+<header class="navbar" id="navbar">
+  <div class="container nav-container">
+
+    <a href="#home" class="brand nav-link">
+      <div class="brand-logo">
+        <img src="assets/images/logo.png" alt="Vijay Pratap Sharma Logo">
+      </div>
+      <div class="brand-text">
+        <strong>Vijay Pratap Sharma</strong>
+        <span>IIT Indore · Energy-Efficient Computing</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">
+          Education & Experience <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div class="nav-dropdown-menu">
+          <a href="#education" data-tab="education">Education</a>
+          <a href="#education" data-tab="experience">Experience</a>
+        </div>
+      </div>
+
+      <a href="#research" class="nav-link">Research</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">
+          Publications <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div class="nav-dropdown-menu">
+          <a href="#publications" data-publication="journals">Journal</a>
+          <a href="#publications" data-publication="conferences">Conference</a>
+          <a href="#publications" data-publication="books">Book</a>
+          <a href="#publications" data-publication="patents">Patent</a>
+        </div>
+      </div>
+
+      <a href="#gallery" class="nav-link">Gallery</a>
+      <a href="#contact" class="nav-link">Contact Me</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn">
+          Other <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div class="nav-dropdown-menu">
+          <a href="#other" data-other="projects">Projects</a>
+          <a href="#other" data-other="achievements">Achievements</a>
+          <a href="#other" data-other="activities">Professional Activities</a>
+        </div>
+      </div>
+
+    </nav>
+
+    <button class="menu-btn" id="menuBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</header>
+
+<main>
+
+<!-- =========================================================
+  HOME
+========================================================= -->
+
+<section id="home" class="page-section active hero-section">
+
+  <!-- Full Width Background -->
+  <div class="hero-bg"></div>
+
+  <div class="container">
+
+    <div class="hero">
+
+      <!-- Left Content -->
+      <div class="hero-content">
+
+        <span class="hero-eyebrow">
+          SENIOR RESEARCH FELLOW & Ph.D RESEARCHER
+        </span>
+
+        <h1 id="heroName">Vijay Pratap Sharma</h1>
+
+        <h3 id="heroDepartment">
+          Department of Electrical Engineering
+        </h3>
+
+        <h4 id="heroInstitution">
+          Indian Institute of Technology Indore
+        </h4>
+
+        <p id="heroDescription">
+          Senior Research Fellow and Ph.D. researcher at IIT Indore,
+          specializing in VLSI, Edge-AI accelerators, RISC-V processors,
+          and energy-efficient computing.
+        </p>
+
+        <!-- Research Tags -->
+        <div class="hero-tags" id="interestTags">
+          <!-- Generated from data.json -->
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="hero-actions">
+
+          <a href="assets/cv/CV.pdf"
+             target="_blank"
+             class="btn btn-primary">
+            Curriculum Vitae
+          </a>
+
+          <a href="#education"
+             class="btn btn-outline"
+             data-tab="education">
+            Education
+          </a>
+
+          <a href="#education"
+             class="btn btn-outline"
+             data-tab="experience">
+            Experience
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- Right Profile -->
+      <div class="hero-image">
+
+        <div class="profile-frame">
+          <img src="assets/images/image1.png" alt="Vijay Pratap Sharma" id="profileImage">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+  ABOUT
+========================================================= -->
+
+<section id="about" class="page-section">
+
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Biography</h2>
+    </div>
+
+    <div class="about-wrapper">
+
+      <!-- Biography -->
+
+      <div class="about-content">
+
+        <div id="aboutBio" class="bio-list">
+          <!-- Generated from data.json -->
+        </div>
+
+      </div>
+
+      <!-- At a Glance -->
+
+      <aside class="glance-card">
+
+        <h3>At a Glance</h3>
+
+        <div class="glance-item">
+          <span>Position</span>
+          <strong id="glancePosition">Senior Research Fellow</strong>
+        </div>
+
+        <div class="glance-item">
+          <span>Institution</span>
+          <strong id="glanceInstitution">IIT Indore</strong>
+        </div>
+
+        <div class="glance-item">
+          <span>Department</span>
+          <strong id="glanceDepartment">Electrical Engineering</strong>
+        </div>
+
+        <div class="glance-item">
+          <span>Research Area</span>
+          <strong>Edge-AI • VLSI • RISC-V</strong>
+        </div>
+
+        <div class="glance-item">
+          <span>Location</span>
+          <strong id="glanceLocation">Indore, India</strong>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+  EDUCATION & EXPERIENCE
+========================================================= -->
+
+<section id="education" class="page-section section-alt">
+
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow">Academic</span>
+      <h2>Education & Experience</h2>
+      <p>
+        Academic background and professional research experience.
+      </p>
+    </div>
+
+    <!-- Tabs -->
+
+    <div class="ee-tabs">
+
+      <button class="ee-tab active" data-ee="education">
+        Education
+      </button>
+
+      <button class="ee-tab" data-ee="experience">
+        Experience
+      </button>
+
+    </div>
+
+    <!-- Education -->
+
+    <div id="educationPanel" class="ee-panel active">
+
+      <div id="educationTimeline" class="timeline">
+        <!-- Generated from data.json -->
+      </div>
+
+    </div>
+
+    <!-- Experience -->
+
+    <div id="experiencePanel" class="ee-panel">
+
+      <div id="experienceTimeline" class="timeline">
+        <!-- Generated from data.json -->
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+  RESEARCH
+========================================================= -->
+
+<section id="research" class="page-section">
+
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Research Areas & Projects</h2>
+      <p>
+        Research activities focused on VLSI, Edge-AI hardware,
+        energy-efficient computing and hardware–software co-design.
+      </p>
+    </div>
+
+    <!-- Dynamic Research Cards -->
+
+    <div id="researchGrid" class="research-grid">
+      <!-- Generated from data.json -->
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+  PUBLICATIONS
+========================================================= -->
+
+<section id="publications" class="page-section section-alt">
+
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Research Publications</h2>
+      <p>
+        Journal articles, conference papers, books and patents.
+      </p>
+    </div>
+
+    <!-- Publication Tabs -->
+
+    <div class="publication-tabs">
+
+      <button class="publication-tab active" data-pub="journals">
+        Journal
+      </button>
+
+      <button class="publication-tab" data-pub="conferences">
+        Conference
+      </button>
+
+      <button class="publication-tab" data-pub="books">
+        Book
+      </button>
+
+      <button class="publication-tab" data-pub="patents">
+        Patent
+      </button>
+
+    </div>
+
+    <!-- Dynamic Publication List -->
+
+    <div id="publicationList" class="publication-list">
+      <!-- Generated from data.json -->
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+  GALLERY
+========================================================= -->
+
+<section id="gallery" class="page-section">
+
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Research Gallery</h2>
+      <p>Academic events, conferences and semiconductor tapeout moments.</p>
+    </div>
+
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" data-gallery="events">Events</button>
+      <button class="gallery-tab" data-gallery="tapeout">Tapeout</button>
+    </div>
+
+    <div id="eventsGallery" class="gallery-panel active">
+      <div id="eventsGrid" class="gallery-grid">
+        <!-- Generated from data.json -->
+      </div>
+    </div>
+
+    <div id="tapeoutGallery" class="gallery-panel">
+      <div id="tapeoutGrid" class="gallery-grid">
+        <!-- Generated from data.json -->
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+  CONTACT
+========================================================= -->
+
+<section id="contact" class="page-section section-alt">
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Contact Me</h2>
+      <p>Research collaboration, academic discussions and professional enquiries.</p>
+    </div>
+
+    <div class="contact-wrapper">
+
+      <!-- Contact Information -->
+      <div class="contact-info">
+
+        <div class="contact-item">
+          <span>Email</span>
+          <a id="contactEmail" href="#">vijayapratapsharma@gmail.com</a>
+        </div>
+
+        <div class="contact-item">
+          <span>Phone</span>
+          <a id="contactPhone" href="#">+91-9807631270</a>
+        </div>
+
+        <div class="contact-item">
+          <span>Location</span>
+          <p id="contactLocation">Indore, Madhya Pradesh, India</p>
+        </div>
+
+       <div class="social-icons">
+
+  <a id="linkedinLink" class="linkedin" target="_blank" title="LinkedIn">
+    <img src="assets/images/linkedin.png" alt="LinkedIn">
+  </a>
+
+  <a id="gmailLink" class="gmail" href="mailto:vijayapratapsharma@gmail.com" title="Gmail">
+    <img src="assets/images/gmail.png" alt="Gmail">
+  </a>
+
+  <a id="scholarLink" class="scholar" target="_blank" title="Google Scholar">
+    <img src="assets/images/scholar.png" alt="Google Scholar">
+  </a>
+
+</div>
+
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-action">
+
+        <h3>Let's Connect</h3>
+
+        <p>
+          Whether it's research collaboration, invited talks,
+          publications or academic opportunities, I'd be happy to connect.
+        </p>
+
+        <a href=""
+          target="_blank"
+          class="btn btn-primary">
+          Open Contact Form
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+  OTHER
+========================================================= -->
+
+<section id="other" class="page-section section-alt">
+
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Projects, Achievements & Professional Activities</h2>
+      <p>Research projects, recognitions and academic contributions.</p>
+    </div>
+
+    <!-- Tabs -->
+
+    <div class="other-tabs">
+
+      <button class="other-tab active" data-other="projects">
+        Projects
+      </button>
+
+      <button class="other-tab" data-other="achievements">
+        Achievements
+      </button>
+
+      <button class="other-tab" data-other="activities">
+        Professional Activities
+      </button>
+
+    </div>
+
+    <!-- Projects -->
+
+    <div id="projectsPanel" class="other-panel active">
+      <div id="projectsGrid" class="activity-grid">
+        <!-- Generated from data.json -->
+      </div>
+    </div>
+
+    <!-- Achievements -->
+
+    <div id="achievementsPanel" class="other-panel">
+      <div id="achievementsGrid" class="activity-grid">
+        <!-- Generated from data.json -->
+      </div>
+    </div>
+
+    <!-- Professional Activities -->
+
+    <div id="activitiesPanel" class="other-panel">
+      <div id="activitiesGrid" class="activity-grid">
+        <!-- Generated from data.json -->
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+  FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+  <div class="container footer-content">
+
+    <div class="footer-identity">
+      <strong>Vijay Pratap Sharma</strong>
+      <p>Senior Research Fellow · IIT Indore</p>
+    </div>
+
+    <nav class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="footer-socials">
+
+      <a id="footerLinkedin" target="_blank" title="LinkedIn">
+        <img src="assets/images/linkedin.png" alt="LinkedIn">
+      </a>
+
+      <a id="footerGmail" href="mailto:vijayapratapsharma@gmail.com" title="Gmail">
+        <img src="assets/images/gmail.png" alt="Gmail">
+      </a>
+
+      <a id="footerScholar" target="_blank" title="Google Scholar">
+        <img src="assets/images/scholar.png" alt="Google Scholar">
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="currentYear"></span> Vijay Pratap Sharma. All Rights Reserved.</p>
+  </div>
+
+</footer>
+
+
+<!-- =========================================================
+  LIGHTBOX
+========================================================= -->
+
+<div id="lightbox" class="lightbox">
+  <button id="lightboxClose">×</button>
+  <img id="lightboxImage" src="" alt="">
+  <p id="lightboxCaption"></p>
+</div>
+
+<button id="scrollTop" class="scroll-top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script src="main.js"></script>
+
+</body>
+</html>

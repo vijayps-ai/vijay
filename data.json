@@ -1,0 +1,273 @@
+{
+  "profile": {
+    "name": "Vijay Pratap Sharma",
+    "designation": "Senior Research Fellow & Ph.D. Researcher",
+    "department": "Department of Electrical Engineering",
+    "institution": "Indian Institute of Technology Indore",
+    "location": "Indore, India",
+    "email": "vijayapratapsharma@gmail.com",
+    "phone": "+91-9807631270",
+    "profileImage": "assets/images/image1.png",
+    "shortBio": "Senior Research Fellow and Ph.D. researcher at IIT Indore, specializing in VLSI, Edge-AI accelerators, RISC-V processors, and energy-efficient computing.",
+    "interests": [
+      "VLSI Design",
+      "Edge AI",
+      "AI Accelerators",
+      "RISC-V",
+      "RTL Design",
+      "ASIC Design",
+      "FPGA",
+      "Trans-Precision Computing",
+      "TinyML",
+      "Hardware–Software Co-Design",
+      "Low-Power VLSI",
+      "Digital IC Design"
+    ]
+  },
+
+  "about": {
+    "bio": [
+      "I am a Senior Research Fellow (SRF) and Ph.D. researcher in Electrical Engineering at the Indian Institute of Technology Indore (IIT Indore), working in the area of VLSI, Edge-AI hardware, and energy-efficient computing.",
+      "My research focuses on the algorithm–precision–hardware co-design of energy-efficient Edge Intelligence systems, with an emphasis on developing high-performance and resource-efficient computing architectures.",
+      "My work involves the design and implementation of AI accelerators, trans-precision MAC architectures, RISC-V processors, and hardware-efficient computing systems for Edge-AI and TinyML applications.",
+      "I have hands-on experience across the complete digital hardware design flow, including algorithm analysis, RTL design, functional verification, synthesis, physical design, timing analysis, power optimization, and ASIC implementation.",
+      "During my research, I have contributed to projects involving TREA, ULTRA-MACE, and SPARV. I have also worked on ASIC implementation at advanced technology nodes, including TSMC 28 nm, along with FPGA-based prototyping and hardware validation.",
+      "I am currently working on the Chips to Startup (C2S) project, funded by the Ministry of Electronics and Information Technology (MeitY), with research interests including low-power digital systems for implantable biomedical applications."
+    ],
+
+    "education": [
+      {
+        "degree": "Doctor of Philosophy",
+        "field": "Electrical Engineering",
+        "institution": "Indian Institute of Technology Indore",
+        "period": "2024 – Dec 2026",
+        "thesis": "Algorithm–Precision Co-Design of Energy-Efficient Edge Intelligence Systems"
+      },
+      {
+        "degree": "Master of Technology",
+        "field": "Electrical / Electronics Engineering",
+        "institution": "Oriental University, Indore",
+        "period": "2019 – 2022",
+        "thesis": "Analysis and Implementation of MAC Unit for Different Precisions"
+      }
+    ],
+
+    "skills": [
+      "Verilog",
+      "SystemVerilog",
+      "Synopsys Design Vision",
+      "Fusion Compiler",
+      "Cadence Genus",
+      "Synopsys ICC-II",
+      "Cadence Innovus",
+      "Siemens Calibre",
+      "Synopsys PrimeTime",
+      "Cadence Tempus",
+      "Cadence JasperGold",
+      "Cadence Conformal",
+      "Cadence Virtuoso",
+      "AMD Vivado",
+      "Vivado HLS",
+      "C",
+      "Python",
+      "Linux / Bash",
+      "Tcl",
+      "RISC-V GNU Toolchain"
+    ]
+  },
+
+  "research": [
+      {
+    "title": "ULTRA-MACE",
+    "fullTitle": "Unified Low-bit Trans-Precision Reconfigurable MAC Engine",
+    "description": "A unified low-bit trans-precision reconfigurable MAC engine supporting FP4, FP8, Posit, and integer arithmetic for accelerated AI computing.",
+    "status": "Research Project",
+    "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:p__nRnzSRKYC"
+  },
+  {
+    "title": "TREA",
+    "fullTitle": "Time-Multiplexed Resource-Efficient Edge-AI Accelerator",
+    "description": "A low-power and resource-efficient Edge-AI accelerator using time-multiplexed execution and low-bit quantization for efficient DNN inference.",
+    "status": "Research Project",
+    "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:Se3iqnhoufwC"
+  },
+  {
+    "title": "SPARV",
+    "fullTitle": "Small-footprint Performance-accelerated RISC-V for TinyML Applications",
+    "description": "A resource-efficient RISC-V processor architecture designed for TinyML applications.",
+    "status": "Research Project",
+    "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:LO7wyVUgiFcC"
+  },
+  {
+    "title": "FALCON-XR",
+    "fullTitle": "Flexible and Hybrid Low-Precision Floating-Point Compute Engine",
+    "description": "A flexible hybrid low-precision floating-point compute engine targeting energy-efficient XR perception acceleration.",
+    "status": "Research Project",
+    "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:0izLItjtcgwC"
+  }
+],
+
+  "publications": {
+   "journals": [
+  {
+    "year": 2026,
+    "title": "ULTRA-MACE: A Unified Low-bit Trans-precision Reconfigurable Multiply-Accumulate Compute Engine for Accelerated Computing",
+    "authors": "Vijay Pratap Sharma, S. Venkatpurwar, M. Lokhande, R. Pilipović, and S. K. Vishvakarma",
+    "venue": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+    "date": "May 2026",
+    "doi": "",
+    "pdf": "",
+    "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:p__nRnzSRKYC"
+  }
+],
+
+   "conferences": [
+  {
+    "year": 2026,
+    "title": "SPARV: A Small-footprint, Performance-accelerated RISC-V for TinyML Applications",
+    "authors": "Vijay Pratap Sharma, S. V. Jayachand, Omkar Kokane, and Santosh Kumar Vishvakarma",
+    "venue": "IEEE Computer Society Annual Symposium on VLSI (ISVLSI)",
+    "location": "Kolkata, India",
+    "date": "July 7–10, 2026",
+    "doi": "",
+    "pdf": "",
+    "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:LO7wyVUgiFcC"
+  }
+],
+
+    "books": [
+  {
+    "year": null,
+    "title": "Books Coming Soon",
+    "authors": "",
+    "venue": "",
+    "date": "",
+    "link": ""
+  }
+],
+
+    "patents": [
+  {
+    "year": null,
+    "title": "Patents Coming Soon",
+    "authors": "",
+    "venue": "",
+    "date": "",
+    "link": ""
+  }
+]
+  },
+
+"projects": [],
+
+"gallery":{
+  "events":[
+    {
+      "title":"NSDCS Lab at VLSID 2026",
+      "location":"Kolkata, India",
+      "date":"March 2026",
+      "photos":[
+        "assets/gallery/vlsid.png",
+        "assets/gallery/vlsid2.png",
+        "assets/gallery/vlsid3.png",
+        "assets/gallery/image.png",
+        "assets/gallery/image1.png"
+      ]
+    },
+    {
+      "title":"C2S Research Workshop",
+      "location":"IIT Indore",
+      "date":"May 2026",
+      "photos":[
+        "assets/gallery/image.png",
+        "assets/gallery/image1.png"
+      ]
+    },
+    {
+      "title":"Semiconductor Design Seminar",
+      "location":"IIT Indore",
+      "date":"March 2026",
+      "photos":[
+        "assets/gallery/image.png",
+        "assets/gallery/image1.png",
+        "assets/gallery/image.png",
+        "assets/gallery/image1.png"
+      ]
+    },
+    {
+      "title":"VLSI Lab Activities",
+      "location":"VLSI Research Lab",
+      "date":"2026",
+      "photos":[
+        "assets/gallery/image.png",
+        "assets/gallery/image1.png",
+        "assets/gallery/image.png",
+        "assets/gallery/image1.png"
+      ]
+    }
+  ],
+
+  "tapeout":[
+    {
+      "title":"TSMC 28nm Tapeout",
+      "location":"ASIC Flow",
+      "date":"2026",
+      "photos":[
+        "assets/gallery/bg.png"
+      ]
+    },
+    {
+      "title":"TSMC 28nm Tapeout",
+      "location":"ASIC Flow",
+      "date":"2026",
+      "photos":[
+        "assets/gallery/bg.png"
+      ]
+    }
+  ]
+},
+
+"achievements": [],
+
+"activities": [],
+
+"experience": [
+  {
+    "period": "2024 – Present",
+    "role": "Senior Research Fellow",
+    "organization": "Indian Institute of Technology Indore",
+    "description": "Research on Edge-AI hardware, AI accelerators, RISC-V processors and energy-efficient computing."
+  },
+  {
+    "period": "2024 – Present",
+    "role": "Research Contributor",
+    "organization": "Chips to Startup (C2S), MeitY",
+    "description": "ASIC implementation, RTL design, verification and hardware-efficient semiconductor systems."
+  }
+],
+
+"c2s": {
+  "title": "Chips to Startup (C2S)",
+  "description": "Research work under the Chips to Startup (C2S) programme supported by the Ministry of Electronics and Information Technology (MeitY).",
+  "role": "Senior Research Fellow / Ph.D. Researcher",
+  "projects": []
+},
+
+"cv": {
+  "file": "assets/cv/CV.pdf",
+  "lastUpdated": "August 2026"
+},
+
+"updates": [],
+
+"contact": {
+  "email": "vijayapratapsharma@gmail.com",
+  "phone": "+91-9807631270",
+  "location": "Indore, India",
+  "linkedin": "https://www.linkedin.com/in/vps/",
+  "googleScholar": "https://scholar.google.com/citations?user=28pCwXoAAAAJ&hl=en&oi=ao",
+  "orcid": "",
+  "researchGate": "",
+  "github": ""
+}
+}
