@@ -231,18 +231,36 @@
 
 "activities": [],
 
-"experience": [
+  "experience": [
   {
-    "period": "2024 – Present",
+    "period": "Apr 2025 – Present",
     "role": "Senior Research Fellow",
-    "organization": "Indian Institute of Technology Indore",
-    "description": "Research on Edge-AI hardware, AI accelerators, RISC-V processors and energy-efficient computing."
+    "organization": "NSDCS Lab, IIT Indore",
+    "description": "Project Supervisor: Prof. Santosh Kumar Vishvakarma. Worked on hardware–software integration, FPGA deployment, peripheral interfacing, and system-level validation of the Falcon-XR platform."
   },
   {
-    "period": "2024 – Present",
-    "role": "Research Contributor",
-    "organization": "Chips to Startup (C2S), MeitY",
-    "description": "ASIC implementation, RTL design, verification and hardware-efficient semiconductor systems."
+    "period": "Nov 2023 – Oct 2025",
+    "role": "Junior Research Fellow",
+    "organization": "NSDCS Lab, IIT Indore",
+    "description": "Designed TREA (Time-Multiplexed Resource-Efficient Accelerator), a low-power and resource-efficient Edge-AI accelerator using time-multiplexed execution and low-bit quantization for efficient DNN inference. Contributed to RTL-to-GDSII implementation, verification, synthesis, and physical design of an indigenous RISC-V processor for ASIC tapeout."
+  },
+  {
+    "period": "Jun 2022 – Oct 2023",
+    "role": "Design Engineer – Synthesis & Quality Check",
+    "organization": "Modernize Chip Solutions Pvt. Ltd., Bengaluru, India",
+    "description": "Worked in a semiconductor design environment with synthesis and design-quality activities at the client location, MediaTek Bangalore Private Limited. Supported synthesis-related analysis and design quality checks for digital hardware."
+  },
+  {
+    "period": "Jun 2021 – May 2022",
+    "role": "Research Assistant",
+    "organization": "NSDCS Lab, IIT Indore",
+    "description": "Project Supervisor: Prof. Santosh Kumar Vishvakarma. Designed and implemented a multi-precision Multiply–Accumulate (MAC) unit supporting different arithmetic precisions for efficient AI and DSP workloads, focusing on performance, power, and hardware optimization. Applied digital design and computer architecture concepts to RTL-based hardware development using Verilog/SystemVerilog."
+  },
+  {
+    "period": "Apr 2017 – May 2019",
+    "role": "Electronics / Embedded Systems Engineer",
+    "organization": "Maxerience Electrosystems Private Limited, Noida, India",
+    "description": "Developed and validated embedded electronic systems with emphasis on digital hardware, microcontroller-based control, and real-time data acquisition. Designed digital and analog hardware modules including sensor interfaces, control circuits, peripheral interfaces, and electronic prototypes. Implemented embedded control algorithms using Embedded C and integrated microcontrollers with sensors and external hardware. Performed hardware debugging, functional testing, troubleshooting, and system-level validation."
   }
 ],
 
