@@ -1,3 +1,99 @@
+/* =========================================================
+   EDUCATION & EXPERIENCE
+   TAB HANDLER
+========================================================= */
+
+function openEducationExperienceTab(tabName) {
+
+  const tabs = document.querySelectorAll(".ee-tab");
+  const panels = document.querySelectorAll(".ee-panel");
+
+  // Remove active state
+  tabs.forEach(tab => {
+    tab.classList.remove("active");
+  });
+
+  panels.forEach(panel => {
+    panel.classList.remove("active");
+  });
+
+  // Activate selected tab
+  const selectedTab = document.querySelector(
+    `.ee-tab[data-ee="${tabName}"]`
+  );
+
+  if (selectedTab) {
+    selectedTab.classList.add("active");
+  }
+
+  // Activate selected panel
+  const selectedPanel = document.getElementById(
+    tabName === "education"
+      ? "educationPanel"
+      : "experiencePanel"
+  );
+
+  if (selectedPanel) {
+    selectedPanel.classList.add("active");
+  }
+}
+
+
+/* =========================================================
+   INTERNAL EDUCATION / EXPERIENCE BUTTONS
+========================================================= */
+
+document.querySelectorAll(".ee-tab").forEach(tab => {
+
+  tab.addEventListener("click", function () {
+
+    const tabName = this.dataset.ee;
+
+    openEducationExperienceTab(tabName);
+
+  });
+
+});
+
+
+/* =========================================================
+   HOME BUTTONS + NAVBAR DROPDOWN
+========================================================= */
+
+document.querySelectorAll("[data-tab]").forEach(link => {
+
+  link.addEventListener("click", function (event) {
+
+    event.preventDefault();
+
+    const tabName = this.dataset.tab;
+
+    // Open Education & Experience section
+    const educationSection = document.getElementById("education");
+
+    if (educationSection) {
+
+      // Show education section
+      document.querySelectorAll(".page-section").forEach(section => {
+        section.classList.remove("active");
+      });
+
+      educationSection.classList.add("active");
+
+      // Open selected tab
+      openEducationExperienceTab(tabName);
+
+      // Scroll to section
+      educationSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }
+
+  });
+
+});
 {
   "profile": {
     "name": "Vijay Pratap Sharma",
