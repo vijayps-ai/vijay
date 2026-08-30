@@ -1,437 +1,265 @@
-/* =========================================================
-   LOAD DATA
-========================================================= */
-
-let portfolioData = {};
-let currentPublication = "journals";
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const res = await fetch("data.json");
-  portfolioData = await res.json();
-
-  loadProfile();
-  loadAbout();
-  loadEducation();
-  loadExperience();
-  loadResearch();
-  loadPublications(currentPublication);
-  loadContact();
-
-  initNavigation();
-  initTabs();
-  initScrollTop();
-
-  document.getElementById("currentYear").textContent =
-    new Date().getFullYear();
-});
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function loadProfile() {
-  const p = portfolioData.profile;
-
-  heroName.textContent = p.name;
-  heroDepartment.textContent = p.department;
-  heroInstitution.textContent = p.institution;
-  heroDescription.textContent = p.shortBio;
-  profileImage.src = p.profileImage;
-
-  interestTags.innerHTML = p.interests
-    .slice(0, 6)
-    .map(tag => `<span>${tag}</span>`)
-    .join("");
-}
-
-/* =========================================================
-   ABOUT
-========================================================= */
-
-function loadAbout() {
-  aboutBio.innerHTML = portfolioData.about.bio
-    .map(
-      t => `
-      <div class="bio-item">
-        <div class="bio-icon"><i class="fa-solid fa-microchip"></i></div>
-        <p>${t}</p>
-      </div>`
-    )
-    .join("");
-
-  glancePosition.textContent = portfolioData.profile.designation;
-  glanceInstitution.textContent = portfolioData.profile.institution;
-  glanceDepartment.textContent = portfolioData.profile.department;
-  glanceLocation.textContent = portfolioData.profile.location;
-}
-
-/* =========================================================
-   EDUCATION
-========================================================= */
-
-function loadEducation() {
-  educationTimeline.innerHTML = portfolioData.about.education
-    .map(
-      e => `
-      <article class="timeline-item">
-        <div class="timeline-year">${e.period}</div>
-        <div>
-          <h3>${e.degree}</h3>
-          <h4>${e.institution}</h4>
-          <p>${e.field}</p>
-          <p>${e.thesis}</p>
-        </div>
-      </article>`
-    )
-    .join("");
-}
-
-/* =========================================================
-   EXPERIENCE
-========================================================= */
-
-function loadExperience() {
-  const exp = portfolioData.experience || [];
-
-  experienceTimeline.innerHTML = exp.length
-    ? exp
-        .map(
-          e => `
-      <article class="timeline-item">
-        <div class="timeline-year">${e.period}</div>
-        <div>
-          <h3>${e.role}</h3>
-          <h4>${e.organization}</h4>
-          <p>${e.description}</p>
-        </div>
-      </article>`
-        )
-        .join("")
-    : `<p style="text-align:center;color:#64748B;">Experience will be updated soon.</p>`;
-}
-
-/* =========================================================
-   RESEARCH
-========================================================= */
-
-function loadResearch() {
-  researchGrid.innerHTML = portfolioData.research
-    .map(
-      (r, i) => `
-      <article class="research-card">
-        <span class="research-label">Research ${String(i + 1).padStart(2, "0")}</span>
-
-        <h3>
-          <a href="${r.link}" target="_blank">${r.title}</a>
-        </h3>
-
-        <h4>${r.fullTitle}</h4>
-
-        <p>${r.description}</p>
-      </article>`
-    )
-    .join("");
-}
-
-/* =========================================================
-   PUBLICATIONS
-========================================================= */
-
-function loadPublications(type) {
-  const list = portfolioData.publications[type] || [];
-
-  publicationList.innerHTML = list.length
-    ? list
-        .map(
-          p => `
-      <article class="publication-card">
-
-        <div class="publication-year">
-          ${p.year || ""}
-        </div>
-
-        <div>
-
-          <h3 class="publication-title">
-            ${
-              p.link
-                ? `<a href="${p.link}" target="_blank">${p.title}</a>`
-                : p.title
-            }
-          </h3>
-
-          ${
-            p.authors
-              ? `<p class="publication-authors">${p.authors}</p>`
-              : ""
-          }
-
-          ${
-            p.venue
-              ? `<p class="publication-venue">${p.venue}${
-                  p.location ? " · " + p.location : ""
-                }</p>`
-              : ""
-          }
-
-          ${p.date ? `<div class="publication-date">${p.date}</div>` : ""}
-
-        </div>
-
-      </article>`
-        )
-        .join("")
-    : `<p style="text-align:center;color:#64748B;">Coming Soon</p>`;
-}
-
-/* =========================================================
-   CONTACT
-========================================================= */
-
-function loadContact() {
-  const c = portfolioData.contact;
-
-  contactEmail.textContent = c.email;
-  contactEmail.href = `mailto:${c.email}`;
-
-  contactPhone.textContent = c.phone;
-  contactPhone.href = `tel:${c.phone}`;
-
-  contactLocation.textContent = c.location;
-
-  linkedinLink.href = c.linkedin;
-  gmailLink.href = `mailto:${c.email}`;
-  scholarLink.href = c.googleScholar;
-
-  footerLinkedin.href = c.linkedin;
-  footerGmail.href = `mailto:${c.email}`;
-  footerScholar.href = c.googleScholar;
-}
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function initNavigation(){
-
-  const links=document.querySelectorAll("a[href^='#']");
-
-  links.forEach(link=>{
-
-    link.addEventListener("click",e=>{
-
-      const id=link.getAttribute("href").substring(1);
-      const section=document.getElementById(id);
-      if(!section) return;
-
-      e.preventDefault();
-
-      /* Change page */
-      document.querySelectorAll(".page-section")
-        .forEach(s=>s.classList.remove("active"));
-      section.classList.add("active");
-
-      /* Active navbar */
-      document.querySelectorAll(".nav-link")
-        .forEach(n=>n.classList.remove("active"));
-      document.querySelector(`.nav-link[href="#${id}"]`)
-        ?.classList.add("active");
-
-      /* Education / Experience */
-      if(link.dataset.tab){
-        document.querySelectorAll(".ee-tab").forEach(b=>b.classList.remove("active"));
-        document.querySelectorAll(".ee-panel").forEach(p=>p.classList.remove("active"));
-
-        document.querySelector(`.ee-tab[data-ee="${link.dataset.tab}"]`)?.classList.add("active");
-        document.getElementById(link.dataset.tab+"Panel")?.classList.add("active");
+{
+  "profile": {
+    "name": "Vijay Pratap Sharma",
+    "designation": "Senior Research Fellow | Ph.D. Researcher",
+    "department": "Department of Electrical Engineering",
+    "institution": "Indian Institute of Technology Indore",
+    "location": "Indore, India",
+    "email": "vijayapratapsharma@gmail.com",
+    "phone": "+91-9807631270",
+    "profileImage": "assets/images/image1.png",
+    "shortBio": [
+      "Senior Research Fellow and Ph.D. researcher in Electrical Engineering at IIT Indore, with approximately 6 years of combined research and industry experience spanning digital electronics, embedded systems, RTL design, ASIC/VLSI implementation, and AI hardware acceleration.",
+      "Experienced in end-to-end hardware development, from architectural exploration and RTL design to verification, synthesis, physical design, and GDSII implementation, with a strong focus on energy-efficient and high-performance computing architectures.",
+      "Research interests include energy-efficient Edge-AI accelerators, trans-precision and low-bit computing, RISC-V processor architectures, hardware–software co-design, FPGA prototyping, and PPA optimization for DNN and TinyML workloads."
+    ],
+    "interests": [
+      "VLSI Design",
+      "Edge AI",
+      "AI Accelerators",
+      "RISC-V",
+      "RTL Design",
+      "ASIC Design",
+      "FPGA",
+      "Trans-Precision Computing",
+      "TinyML",
+      "Hardware–Software Co-Design",
+      "Low-Power VLSI",
+      "Digital IC Design"
+    ]
+  },
+  "about": {
+    "bio": [
+      "I am a Senior Research Fellow (SRF) and Ph.D. researcher in Electrical Engineering at the Indian Institute of Technology Indore (IIT Indore), working in the area of VLSI, Edge-AI hardware, and energy-efficient computing.",
+      "My research focuses on the algorithm–precision–hardware co-design of energy-efficient Edge Intelligence systems, with an emphasis on developing high-performance and resource-efficient computing architectures.",
+      "My work involves the design and implementation of AI accelerators, trans-precision MAC architectures, RISC-V processors, and hardware-efficient computing systems for Edge-AI and TinyML applications.",
+      "I have hands-on experience across the complete digital hardware design flow, including algorithm analysis, RTL design, functional verification, synthesis, physical design, timing analysis, power optimization, and ASIC implementation.",
+      "During my research, I have contributed to projects involving TREA, ULTRA-MACE, and SPARV. I have also worked on ASIC implementation at advanced technology nodes, including TSMC 28 nm, along with FPGA-based prototyping and hardware validation.",
+      "I am currently working on the Chips to Startup (C2S) project, funded by the Ministry of Electronics and Information Technology (MeitY), with research interests including low-power digital systems for implantable biomedical applications."
+    ],
+    "education": [
+      {
+        "degree": "Doctor of Philosophy",
+        "field": "Electrical Engineering",
+        "institution": "Indian Institute of Technology Indore",
+        "period": "2024 – Dec 2026",
+        "thesis": "Algorithm–Precision Co-Design of Energy-Efficient Edge Intelligence Systems"
+      },
+      {
+        "degree": "Master of Technology",
+        "field": "Electrical / Electronics Engineering",
+        "institution": "Oriental University, Indore",
+        "period": "2019 – 2022",
+        "thesis": "Analysis and Implementation of MAC Unit for Different Precisions"
       }
-
-      /* Publications */
-      if(link.dataset.publication){
-        document.querySelectorAll(".publication-tab").forEach(b=>b.classList.remove("active"));
-        document.querySelector(`.publication-tab[data-pub="${link.dataset.publication}"]`)?.classList.add("active");
-
-        currentPublication=link.dataset.publication;
-        loadPublications(currentPublication);
-      }
-
-      /* Other */
-      if(link.dataset.other){
-        document.querySelectorAll(".other-tab").forEach(b=>b.classList.remove("active"));
-        document.querySelectorAll(".other-panel").forEach(p=>p.classList.remove("active"));
-
-        document.querySelector(`.other-tab[data-other="${link.dataset.other}"]`)?.classList.add("active");
-        document.getElementById(link.dataset.other+"Panel")?.classList.add("active");
-      }
-
-      /* Gallery */
-      if(link.dataset.gallery){
-        document.querySelectorAll(".gallery-tab").forEach(b=>b.classList.remove("active"));
-        document.querySelectorAll(".gallery-panel").forEach(p=>p.classList.remove("active"));
-
-        document.querySelector(`.gallery-tab[data-gallery="${link.dataset.gallery}"]`)?.classList.add("active");
-        document.getElementById(link.dataset.gallery+"Gallery")?.classList.add("active");
-      }
-
-      window.scrollTo({top:0,behavior:"smooth"});
-
-    });
-
-  });
-
-}
-/* =========================================================
-   TABS
-========================================================= */
-function initTabs() {
-
-  /* Education & Experience */
-  document.querySelectorAll(".ee-tab").forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll(".ee-tab").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".ee-panel").forEach(p => p.classList.remove("active"));
-
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.ee + "Panel").classList.add("active");
-    };
-  });
-
-  /* Publications */
-  document.querySelectorAll(".publication-tab").forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll(".publication-tab").forEach(b => b.classList.remove("active"));
-
-      btn.classList.add("active");
-      currentPublication = btn.dataset.pub;
-      loadPublications(currentPublication);
-    };
-  });
-
-  /* Gallery */
-  document.querySelectorAll(".gallery-tab").forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll(".gallery-tab").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".gallery-panel").forEach(p => p.classList.remove("active"));
-
-      btn.classList.add("active");
-
-      if (btn.dataset.gallery === "events") {
-        document.getElementById("eventsGallery").classList.add("active");
-      } else {
-        document.getElementById("tapeoutGallery").classList.add("active");
-      }
-    };
-  });
-
-  // Load gallery images for events and tapeouts
-  function loadGallery(){
-
-  renderGallery("events",eventsGrid);
-
-  renderGallery("tapeout",tapeoutGrid);
-
-}
-
-function renderGallery(type,container){
-
-  const albums=portfolioData.gallery[type]||[];
-
-  container.innerHTML=albums.map((album,i)=>`
-
-    <article class="gallery-card" onclick="openAlbum('${type}',${i})">
-
-      <div class="gallery-image">
-        <img
-          src="${album.photos[0]}"
-          id="${type}-${i}"
-          alt="${album.title}">
-      </div>
-
-      <div class="gallery-info">
-        <h3>${album.title}</h3>
-        <p>${album.location}</p>
-        <span>${album.photos.length} Photos</span>
-      </div>
-
-    </article>
-
-  `).join("");
-
-  albums.forEach((album,i)=>{
-
-    let index=0;
-
-    setInterval(()=>{
-
-      index=(index+1)%album.photos.length;
-
-      const img=document.getElementById(`${type}-${i}`);
-
-      if(img) img.src=album.photos[index];
-
-    },2000);
-
-  });
-
-}
-loadGallery();
-
-let currentAlbum=[];
-
-function openAlbum(type,index){
-
-  currentAlbum=portfolioData.gallery[type][index].photos;
-
-  let i=0;
-
-  lightbox.style.display="flex";
-  lightboxImage.src=currentAlbum[0];
-
-  const slide=setInterval(()=>{
-
-    if(lightbox.style.display==="none"){
-      clearInterval(slide);
-      return;
+    ],
+    "skills": [
+      "Verilog",
+      "SystemVerilog",
+      "Synopsys Design Vision",
+      "Fusion Compiler",
+      "Cadence Genus",
+      "Synopsys ICC-II",
+      "Cadence Innovus",
+      "Siemens Calibre",
+      "Synopsys PrimeTime",
+      "Cadence Tempus",
+      "Cadence JasperGold",
+      "Cadence Conformal",
+      "Cadence Virtuoso",
+      "AMD Vivado",
+      "Vivado HLS",
+      "C",
+      "Python",
+      "Linux / Bash",
+      "Tcl",
+      "RISC-V GNU Toolchain"
+    ]
+  },
+  "research": [
+    {
+      "title": "ULTRA-MACE",
+      "fullTitle": "Unified Low-bit Trans-Precision Reconfigurable MAC Engine",
+      "description": "A unified low-bit trans-precision reconfigurable MAC engine supporting FP4, FP8, Posit, and integer arithmetic for accelerated AI computing.",
+      "status": "Research Project",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:p__nRnzSRKYC"
+    },
+    {
+      "title": "TREA",
+      "fullTitle": "Time-Multiplexed Resource-Efficient Edge-AI Accelerator",
+      "description": "A low-power and resource-efficient Edge-AI accelerator using time-multiplexed execution and low-bit quantization for efficient DNN inference.",
+      "status": "Research Project",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:Se3iqnhoufwC"
+    },
+    {
+      "title": "SPARV",
+      "fullTitle": "Small-footprint Performance-accelerated RISC-V for TinyML Applications",
+      "description": "A resource-efficient RISC-V processor architecture designed for TinyML applications.",
+      "status": "Research Project",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:LO7wyVUgiFcC"
+    },
+    {
+      "title": "FALCON-XR",
+      "fullTitle": "Flexible and Hybrid Low-Precision Floating-Point Compute Engine",
+      "description": "A flexible hybrid low-precision floating-point compute engine targeting energy-efficient XR perception acceleration.",
+      "status": "Research Project",
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:0izLItjtcgwC"
     }
-
-    i=(i+1)%currentAlbum.length;
-    lightboxImage.src=currentAlbum[i];
-
-  },2000);
-
-}
-
-lightboxClose.onclick=()=>{
-  lightbox.style.display="none";
-};
-
-  /* Other */
-  document.querySelectorAll(".other-tab").forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll(".other-tab").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".other-panel").forEach(p => p.classList.remove("active"));
-
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.other + "Panel").classList.add("active");
-    };
-  });
-
-}
-
-/* =========================================================
-   SCROLL TOP
-========================================================= */
-
-function initScrollTop() {
-  const btn = document.getElementById("scrollTop");
-
-  window.addEventListener("scroll", () => {
-    btn.style.display = window.scrollY > 300 ? "flex" : "none";
-  });
-
-  btn.onclick = () =>
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+  ],
+  "publications": {
+    "journals": [
+      {
+        "year": 2026,
+        "title": "ULTRA-MACE: A Unified Low-bit Trans-precision Reconfigurable Multiply-Accumulate Compute Engine for Accelerated Computing",
+        "authors": "Vijay Pratap Sharma, S. Venkatpurwar, M. Lokhande, R. Pilipović, and S. K. Vishvakarma",
+        "venue": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+        "date": "May 2026",
+        "doi": "",
+        "pdf": "",
+        "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:p__nRnzSRKYC"
+      }
+    ],
+    "conferences": [
+      {
+        "year": 2026,
+        "title": "SPARV: A Small-footprint, Performance-accelerated RISC-V for TinyML Applications",
+        "authors": "Vijay Pratap Sharma, S. V. Jayachand, Omkar Kokane, and Santosh Kumar Vishvakarma",
+        "venue": "IEEE Computer Society Annual Symposium on VLSI (ISVLSI)",
+        "location": "Kolkata, India",
+        "date": "July 7–10, 2026",
+        "doi": "",
+        "pdf": "",
+        "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:LO7wyVUgiFcC"
+      }
+    ],
+    "books": [
+      {
+        "year": null,
+        "title": "Books Coming Soon",
+        "authors": "",
+        "venue": "",
+        "date": "",
+        "link": ""
+      }
+    ],
+    "patents": [
+      {
+        "year": null,
+        "title": "Patents Coming Soon",
+        "authors": "",
+        "venue": "",
+        "date": "",
+        "link": ""
+      }
+    ]
+  },
+  "projects": [],
+  "gallery": {
+    "events": [
+      {
+        "title": "NSDCS Lab at VLSID 2026",
+        "location": "Kolkata, India",
+        "date": "March 2026",
+        "photos": [
+          "assets/gallery/vlsid.png",
+          "assets/gallery/vlsid2.png",
+          "assets/gallery/vlsid3.png",
+          "assets/gallery/image.png",
+          "assets/gallery/image1.png"
+        ]
+      },
+      {
+        "title": "C2S Research Workshop",
+        "location": "IIT Indore",
+        "date": "May 2026",
+        "photos": [
+          "assets/gallery/image.png",
+          "assets/gallery/image1.png"
+        ]
+      },
+      {
+        "title": "Semiconductor Design Seminar",
+        "location": "IIT Indore",
+        "date": "March 2026",
+        "photos": [
+          "assets/gallery/image.png",
+          "assets/gallery/image1.png"
+        ]
+      },
+      {
+        "title": "VLSI Lab Activities",
+        "location": "VLSI Research Lab",
+        "date": "2026",
+        "photos": [
+          "assets/gallery/image.png",
+          "assets/gallery/image1.png"
+        ]
+      }
+    ],
+    "tapeout": [
+      {
+        "title": "TSMC 28nm Tapeout",
+        "location": "ASIC Flow",
+        "date": "2026",
+        "photos": [
+          "assets/gallery/bg.png"
+        ]
+      }
+    ]
+  },
+  "achievements": [],
+  "activities": [],
+  "experience": [
+    {
+      "period": "Apr 2025 – Present",
+      "role": "Senior Research Fellow",
+      "organization": "NSDCS Lab, IIT Indore",
+      "description": "Project Supervisor: Prof. Santosh Kumar Vishvakarma. Worked on hardware–software integration, FPGA deployment, peripheral interfacing, and system-level validation of the Falcon-XR platform."
+    },
+    {
+      "period": "Nov 2023 – Oct 2025",
+      "role": "Junior Research Fellow",
+      "organization": "NSDCS Lab, IIT Indore",
+      "description": "Designed TREA (Time-Multiplexed Resource-Efficient Accelerator), a low-power and resource-efficient Edge-AI accelerator using time-multiplexed execution and low-bit quantization for efficient DNN inference. Contributed to RTL-to-GDSII implementation, verification, synthesis, and physical design of an indigenous RISC-V processor for ASIC tapeout."
+    },
+    {
+      "period": "Jun 2022 – Oct 2023",
+      "role": "Design Engineer – Synthesis & Quality Check",
+      "organization": "Modernize Chip Solutions Pvt. Ltd., Bengaluru, India",
+      "description": "Worked in a semiconductor design environment with synthesis and design-quality activities at the client location, MediaTek Bangalore Private Limited. Supported synthesis-related analysis and design quality checks for digital hardware."
+    },
+    {
+      "period": "Jun 2021 – May 2022",
+      "role": "Research Assistant",
+      "organization": "NSDCS Lab, IIT Indore",
+      "description": "Project Supervisor: Prof. Santosh Kumar Vishvakarma. Designed and implemented a multi-precision Multiply–Accumulate (MAC) unit supporting different arithmetic precisions for efficient AI and DSP workloads, focusing on performance, power, and hardware optimization. Applied digital design and computer architecture concepts to RTL-based hardware development using Verilog/SystemVerilog."
+    },
+    {
+      "period": "Apr 2017 – May 2019",
+      "role": "Electronics / Embedded Systems Engineer",
+      "organization": "Maxerience Electrosystems Private Limited, Noida, India",
+      "description": "Developed and validated embedded electronic systems with emphasis on digital hardware, microcontroller-based control, and real-time data acquisition. Designed digital and analog hardware modules including sensor interfaces, control circuits, peripheral interfaces, and electronic prototypes. Implemented embedded control algorithms using Embedded C and integrated microcontrollers with sensors and external hardware. Performed hardware debugging, functional testing, troubleshooting, and system-level validation."
+    }
+  ],
+  "c2s": {
+    "title": "Chips to Startup (C2S)",
+    "description": "Research work under the Chips to Startup (C2S) programme supported by the Ministry of Electronics and Information Technology (MeitY).",
+    "role": "Senior Research Fellow / Ph.D. Researcher",
+    "projects": []
+  },
+  "cv": {
+    "file": "assets/cv/CV.pdf",
+    "lastUpdated": "August 2026"
+  },
+  "updates": [],
+  "contact": {
+    "email": "vijayapratapsharma@gmail.com",
+    "phone": "+91-9807631270",
+    "location": "Indore, India",
+    "linkedin": "https://www.linkedin.com/in/vps/",
+    "googleScholar": "https://scholar.google.com/citations?user=28pCwXoAAAAJ&hl=en&oi=ao",
+    "orcid": "",
+    "researchGate": "",
+    "github": ""
+  }
 }
