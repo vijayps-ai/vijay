@@ -9,8 +9,7 @@
     "phone": "+91-9807631270",
     "profileImage": "assets/images/image1.png",
     "shortBio": "Senior Research Fellow and Ph.D. researcher at IIT Indore, specializing in VLSI, Edge-AI accelerators, RISC-V processors, and energy-efficient computing.",
-     "I am a Senior Research Fellow (SRF) and Ph.D. researcher in Electrical Engineering at the Indian Institute of Technology Indore (IIT Indore), working in the area of VLSI, Edge-AI hardware, and energy-efficient computing.",
-      "My research focuses on the algorithm–precision–hardware co-design of energy-efficient Edge Intelligence systems, with an emphasis on developing high-performance and resource-efficient computing architectures.","interests": [
+    "interests": [
       "VLSI Design",
       "Edge AI",
       "AI Accelerators",
