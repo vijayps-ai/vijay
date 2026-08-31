@@ -1,361 +1,552 @@
 /* =========================================================
-   EDUCATION & EXPERIENCE
-   TAB HANDLER
+   PORTFOLIO WEBSITE — MAIN JAVASCRIPT
+   Fixed navigation, tabs, gallery, lightbox and mobile menu.
 ========================================================= */
 
-function openEducationExperienceTab(tabName) {
+"use strict";
 
-  const tabs = document.querySelectorAll(".ee-tab");
-  const panels = document.querySelectorAll(".ee-panel");
+let portfolioData = {};
+let currentPublication = "journals";
+let currentAlbum = [];
+let galleryTimers = [];
+let lightboxTimer = null;
 
-  // Remove active state
-  tabs.forEach(tab => {
-    tab.classList.remove("active");
-  });
+document.addEventListener("DOMContentLoaded", initPortfolio);
 
-  panels.forEach(panel => {
-    panel.classList.remove("active");
-  });
+async function initPortfolio() {
+  try {
+    const response = await fetch("data.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error(`Unable to load data.json (${response.status})`);
+    portfolioData = await response.json();
 
-  // Activate selected tab
-  const selectedTab = document.querySelector(
-    `.ee-tab[data-ee="${tabName}"]`
-  );
+    loadProfile();
+    loadAbout();
+    loadEducation();
+    loadExperience();
+    loadResearch();
+    loadPublications(currentPublication);
+    loadGallery();
+    loadOther();
+    loadContact();
 
-  if (selectedTab) {
-    selectedTab.classList.add("active");
-  }
-
-  // Activate selected panel
-  const selectedPanel = document.getElementById(
-    tabName === "education"
-      ? "educationPanel"
-      : "experiencePanel"
-  );
-
-  if (selectedPanel) {
-    selectedPanel.classList.add("active");
+    initNavigation();
+    initTabs();
+    initMobileMenu();
+    initLightbox();
+    initScrollTop();
+    setText("currentYear", new Date().getFullYear());
+  } catch (error) {
+    console.error("Portfolio initialization failed:", error);
+    showLoadError();
   }
 }
 
+/* ---------- Helpers ---------- */
 
-/* =========================================================
-   INTERNAL EDUCATION / EXPERIENCE BUTTONS
-========================================================= */
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-document.querySelectorAll(".ee-tab").forEach(tab => {
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value ?? "";
+}
 
-  tab.addEventListener("click", function () {
+function safeArray(value) {
+  return Array.isArray(value) ? value : [];
+}
 
-    const tabName = this.dataset.ee;
+function escapeHTML(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-    openEducationExperienceTab(tabName);
-
-  });
-
-});
-
-
-/* =========================================================
-   HOME BUTTONS + NAVBAR DROPDOWN
-========================================================= */
-
-document.querySelectorAll("[data-tab]").forEach(link => {
-
-  link.addEventListener("click", function (event) {
-
-    event.preventDefault();
-
-    const tabName = this.dataset.tab;
-
-    // Open Education & Experience section
-    const educationSection = document.getElementById("education");
-
-    if (educationSection) {
-
-      // Show education section
-      document.querySelectorAll(".page-section").forEach(section => {
-        section.classList.remove("active");
-      });
-
-      educationSection.classList.add("active");
-
-      // Open selected tab
-      openEducationExperienceTab(tabName);
-
-      // Scroll to section
-      educationSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }
-
-  });
-
-});
-{
-  "profile": {
-    "name": "Vijay Pratap Sharma",
-    "designation": "Senior Research Fellow | Ph.D. Researcher",
-    "department": "Department of Electrical Engineering",
-    "institution": "Indian Institute of Technology Indore",
-    "location": "Indore, India",
-    "email": "vijayapratapsharma@gmail.com",
-    "phone": "+91-9807631270",
-    "profileImage": "assets/images/image1.png",
-    "shortBio": [
-      "Senior Research Fellow and Ph.D. researcher in Electrical Engineering at IIT Indore, with approximately 6 years of combined research and industry experience spanning digital electronics, embedded systems, RTL design, ASIC/VLSI implementation, and AI hardware acceleration.",
-      "Experienced in end-to-end hardware development, from architectural exploration and RTL design to verification, synthesis, physical design, and GDSII implementation, with a strong focus on energy-efficient and high-performance computing architectures.",
-      "Research interests include energy-efficient Edge-AI accelerators, trans-precision and low-bit computing, RISC-V processor architectures, hardware–software co-design, FPGA prototyping, and PPA optimization for DNN and TinyML workloads."
-    ],
-    "interests": [
-      "VLSI Design",
-      "Edge AI",
-      "AI Accelerators",
-      "RISC-V",
-      "RTL Design",
-      "ASIC Design",
-      "FPGA",
-      "Trans-Precision Computing",
-      "TinyML",
-      "Hardware–Software Co-Design",
-      "Low-Power VLSI",
-      "Digital IC Design"
-    ]
-  },
-  "about": {
-    "bio": [
-      "I am a Senior Research Fellow (SRF) and Ph.D. researcher in Electrical Engineering at the Indian Institute of Technology Indore (IIT Indore), working in the area of VLSI, Edge-AI hardware, and energy-efficient computing.",
-      "My research focuses on the algorithm–precision–hardware co-design of energy-efficient Edge Intelligence systems, with an emphasis on developing high-performance and resource-efficient computing architectures.",
-      "My work involves the design and implementation of AI accelerators, trans-precision MAC architectures, RISC-V processors, and hardware-efficient computing systems for Edge-AI and TinyML applications.",
-      "I have hands-on experience across the complete digital hardware design flow, including algorithm analysis, RTL design, functional verification, synthesis, physical design, timing analysis, power optimization, and ASIC implementation.",
-      "During my research, I have contributed to projects involving TREA, ULTRA-MACE, and SPARV. I have also worked on ASIC implementation at advanced technology nodes, including TSMC 28 nm, along with FPGA-based prototyping and hardware validation.",
-      "I am currently working on the Chips to Startup (C2S) project, funded by the Ministry of Electronics and Information Technology (MeitY), with research interests including low-power digital systems for implantable biomedical applications."
-    ],
-    "education": [
-      {
-        "degree": "Doctor of Philosophy",
-        "field": "Electrical Engineering",
-        "institution": "Indian Institute of Technology Indore",
-        "period": "2024 – Dec 2026",
-        "thesis": "Algorithm–Precision Co-Design of Energy-Efficient Edge Intelligence Systems"
-      },
-      {
-        "degree": "Master of Technology",
-        "field": "Electrical / Electronics Engineering",
-        "institution": "Oriental University, Indore",
-        "period": "2019 – 2022",
-        "thesis": "Analysis and Implementation of MAC Unit for Different Precisions"
-      }
-    ],
-    "skills": [
-      "Verilog",
-      "SystemVerilog",
-      "Synopsys Design Vision",
-      "Fusion Compiler",
-      "Cadence Genus",
-      "Synopsys ICC-II",
-      "Cadence Innovus",
-      "Siemens Calibre",
-      "Synopsys PrimeTime",
-      "Cadence Tempus",
-      "Cadence JasperGold",
-      "Cadence Conformal",
-      "Cadence Virtuoso",
-      "AMD Vivado",
-      "Vivado HLS",
-      "C",
-      "Python",
-      "Linux / Bash",
-      "Tcl",
-      "RISC-V GNU Toolchain"
-    ]
-  },
-  "research": [
-    {
-      "title": "ULTRA-MACE",
-      "fullTitle": "Unified Low-bit Trans-Precision Reconfigurable MAC Engine",
-      "description": "A unified low-bit trans-precision reconfigurable MAC engine supporting FP4, FP8, Posit, and integer arithmetic for accelerated AI computing.",
-      "status": "Research Project",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:p__nRnzSRKYC"
-    },
-    {
-      "title": "TREA",
-      "fullTitle": "Time-Multiplexed Resource-Efficient Edge-AI Accelerator",
-      "description": "A low-power and resource-efficient Edge-AI accelerator using time-multiplexed execution and low-bit quantization for efficient DNN inference.",
-      "status": "Research Project",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:Se3iqnhoufwC"
-    },
-    {
-      "title": "SPARV",
-      "fullTitle": "Small-footprint Performance-accelerated RISC-V for TinyML Applications",
-      "description": "A resource-efficient RISC-V processor architecture designed for TinyML applications.",
-      "status": "Research Project",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:LO7wyVUgiFcC"
-    },
-    {
-      "title": "FALCON-XR",
-      "fullTitle": "Flexible and Hybrid Low-Precision Floating-Point Compute Engine",
-      "description": "A flexible hybrid low-precision floating-point compute engine targeting energy-efficient XR perception acceleration.",
-      "status": "Research Project",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:0izLItjtcgwC"
-    }
-  ],
-  "publications": {
-    "journals": [
-      {
-        "year": 2026,
-        "title": "ULTRA-MACE: A Unified Low-bit Trans-precision Reconfigurable Multiply-Accumulate Compute Engine for Accelerated Computing",
-        "authors": "Vijay Pratap Sharma, S. Venkatpurwar, M. Lokhande, R. Pilipović, and S. K. Vishvakarma",
-        "venue": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
-        "date": "May 2026",
-        "doi": "",
-        "pdf": "",
-        "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:p__nRnzSRKYC"
-      }
-    ],
-    "conferences": [
-      {
-        "year": 2026,
-        "title": "SPARV: A Small-footprint, Performance-accelerated RISC-V for TinyML Applications",
-        "authors": "Vijay Pratap Sharma, S. V. Jayachand, Omkar Kokane, and Santosh Kumar Vishvakarma",
-        "venue": "IEEE Computer Society Annual Symposium on VLSI (ISVLSI)",
-        "location": "Kolkata, India",
-        "date": "July 7–10, 2026",
-        "doi": "",
-        "pdf": "",
-        "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=28pCwXoAAAAJ&citation_for_view=28pCwXoAAAAJ:LO7wyVUgiFcC"
-      }
-    ],
-    "books": [
-      {
-        "year": null,
-        "title": "Books Coming Soon",
-        "authors": "",
-        "venue": "",
-        "date": "",
-        "link": ""
-      }
-    ],
-    "patents": [
-      {
-        "year": null,
-        "title": "Patents Coming Soon",
-        "authors": "",
-        "venue": "",
-        "date": "",
-        "link": ""
-      }
-    ]
-  },
-  "projects": [],
-  "gallery": {
-    "events": [
-      {
-        "title": "NSDCS Lab at VLSID 2026",
-        "location": "Kolkata, India",
-        "date": "March 2026",
-        "photos": [
-          "assets/gallery/vlsid.png",
-          "assets/gallery/vlsid2.png",
-          "assets/gallery/vlsid3.png",
-          "assets/gallery/image.png",
-          "assets/gallery/image1.png"
-        ]
-      },
-      {
-        "title": "C2S Research Workshop",
-        "location": "IIT Indore",
-        "date": "May 2026",
-        "photos": [
-          "assets/gallery/image.png",
-          "assets/gallery/image1.png"
-        ]
-      },
-      {
-        "title": "Semiconductor Design Seminar",
-        "location": "IIT Indore",
-        "date": "March 2026",
-        "photos": [
-          "assets/gallery/image.png",
-          "assets/gallery/image1.png"
-        ]
-      },
-      {
-        "title": "VLSI Lab Activities",
-        "location": "VLSI Research Lab",
-        "date": "2026",
-        "photos": [
-          "assets/gallery/image.png",
-          "assets/gallery/image1.png"
-        ]
-      }
-    ],
-    "tapeout": [
-      {
-        "title": "TSMC 28nm Tapeout",
-        "location": "ASIC Flow",
-        "date": "2026",
-        "photos": [
-          "assets/gallery/bg.png"
-        ]
-      }
-    ]
-  },
-  "achievements": [],
-  "activities": [],
-  "experience": [
-    {
-      "period": "Apr 2025 – Present",
-      "role": "Senior Research Fellow",
-      "organization": "NSDCS Lab, IIT Indore",
-      "description": "Project Supervisor: Prof. Santosh Kumar Vishvakarma. Worked on hardware–software integration, FPGA deployment, peripheral interfacing, and system-level validation of the Falcon-XR platform."
-    },
-    {
-      "period": "Nov 2023 – Oct 2025",
-      "role": "Junior Research Fellow",
-      "organization": "NSDCS Lab, IIT Indore",
-      "description": "Designed TREA (Time-Multiplexed Resource-Efficient Accelerator), a low-power and resource-efficient Edge-AI accelerator using time-multiplexed execution and low-bit quantization for efficient DNN inference. Contributed to RTL-to-GDSII implementation, verification, synthesis, and physical design of an indigenous RISC-V processor for ASIC tapeout."
-    },
-    {
-      "period": "Jun 2022 – Oct 2023",
-      "role": "Design Engineer – Synthesis & Quality Check",
-      "organization": "Modernize Chip Solutions Pvt. Ltd., Bengaluru, India",
-      "description": "Worked in a semiconductor design environment with synthesis and design-quality activities at the client location, MediaTek Bangalore Private Limited. Supported synthesis-related analysis and design quality checks for digital hardware."
-    },
-    {
-      "period": "Jun 2021 – May 2022",
-      "role": "Research Assistant",
-      "organization": "NSDCS Lab, IIT Indore",
-      "description": "Project Supervisor: Prof. Santosh Kumar Vishvakarma. Designed and implemented a multi-precision Multiply–Accumulate (MAC) unit supporting different arithmetic precisions for efficient AI and DSP workloads, focusing on performance, power, and hardware optimization. Applied digital design and computer architecture concepts to RTL-based hardware development using Verilog/SystemVerilog."
-    },
-    {
-      "period": "Apr 2017 – May 2019",
-      "role": "Electronics / Embedded Systems Engineer",
-      "organization": "Maxerience Electrosystems Private Limited, Noida, India",
-      "description": "Developed and validated embedded electronic systems with emphasis on digital hardware, microcontroller-based control, and real-time data acquisition. Designed digital and analog hardware modules including sensor interfaces, control circuits, peripheral interfaces, and electronic prototypes. Implemented embedded control algorithms using Embedded C and integrated microcontrollers with sensors and external hardware. Performed hardware debugging, functional testing, troubleshooting, and system-level validation."
-    }
-  ],
-  "c2s": {
-    "title": "Chips to Startup (C2S)",
-    "description": "Research work under the Chips to Startup (C2S) programme supported by the Ministry of Electronics and Information Technology (MeitY).",
-    "role": "Senior Research Fellow / Ph.D. Researcher",
-    "projects": []
-  },
-  "cv": {
-    "file": "assets/cv/CV.pdf",
-    "lastUpdated": "August 2026"
-  },
-  "updates": [],
-  "contact": {
-    "email": "vijayapratapsharma@gmail.com",
-    "phone": "+91-9807631270",
-    "location": "Indore, India",
-    "linkedin": "https://www.linkedin.com/in/vps/",
-    "googleScholar": "https://scholar.google.com/citations?user=28pCwXoAAAAJ&hl=en&oi=ao",
-    "orcid": "",
-    "researchGate": "",
-    "github": ""
+function safeURL(value) {
+  if (!value) return "#";
+  try {
+    const url = new URL(value, window.location.href);
+    return ["http:", "https:", "mailto:", "tel:"].includes(url.protocol) ? url.href : "#";
+  } catch {
+    return "#";
   }
+}
+
+function setExternalHref(id, url) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  element.href = safeURL(url);
+  element.target = "_blank";
+  element.rel = "noopener noreferrer";
+}
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function loadProfile() {
+  const profile = portfolioData.profile || {};
+
+  setText("heroName", profile.name);
+  setText("heroDepartment", profile.department);
+  setText("heroInstitution", profile.institution);
+
+  const description = Array.isArray(profile.shortBio)
+    ? profile.shortBio.join(" ")
+    : profile.shortBio;
+  setText("heroDescription", description);
+
+  const image = document.getElementById("profileImage");
+  if (image && profile.profileImage) image.src = profile.profileImage;
+
+  const tags = safeArray(profile.interests).slice(0, 8);
+  const tagContainer = document.getElementById("interestTags");
+  if (tagContainer) {
+    tagContainer.innerHTML = tags
+      .map(tag => `<span>${escapeHTML(tag)}</span>`)
+      .join("");
+  }
+}
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+function loadAbout() {
+  const about = portfolioData.about || {};
+  const profile = portfolioData.profile || {};
+  const bioContainer = document.getElementById("aboutBio");
+
+  if (bioContainer) {
+    const bio = safeArray(about.bio);
+    bioContainer.innerHTML = bio.length
+      ? bio.map(text => `
+          <div class="bio-item">
+            <div class="bio-icon"><i class="fa-solid fa-microchip"></i></div>
+            <p>${escapeHTML(text)}</p>
+          </div>
+        `).join("")
+      : `<p class="empty-state">Biography will be updated soon.</p>`;
+  }
+
+  setText("glancePosition", profile.designation);
+  setText("glanceInstitution", profile.institution);
+  setText("glanceDepartment", profile.department);
+  setText("glanceLocation", profile.location);
+}
+
+/* =========================================================
+   EDUCATION & EXPERIENCE
+========================================================= */
+
+function loadEducation() {
+  const container = document.getElementById("educationTimeline");
+  if (!container) return;
+
+  const items = safeArray(portfolioData.about?.education);
+  container.innerHTML = items.length
+    ? items.map(item => `
+        <article class="timeline-item">
+          <div class="timeline-year">${escapeHTML(item.period)}</div>
+          <div>
+            <h3>${escapeHTML(item.degree)}</h3>
+            <h4>${escapeHTML(item.institution)}</h4>
+            <p>${escapeHTML(item.field)}</p>
+            ${item.thesis ? `<p><strong>Thesis:</strong> ${escapeHTML(item.thesis)}</p>` : ""}
+          </div>
+        </article>
+      `).join("")
+    : `<p class="empty-state">Education details will be updated soon.</p>`;
+}
+
+function loadExperience() {
+  const container = document.getElementById("experienceTimeline");
+  if (!container) return;
+
+  const items = safeArray(portfolioData.experience);
+  container.innerHTML = items.length
+    ? items.map(item => `
+        <article class="timeline-item">
+          <div class="timeline-year">${escapeHTML(item.period)}</div>
+          <div>
+            <h3>${escapeHTML(item.role)}</h3>
+            <h4>${escapeHTML(item.organization)}</h4>
+            <p>${escapeHTML(item.description)}</p>
+          </div>
+        </article>
+      `).join("")
+    : `<p class="empty-state">Experience will be updated soon.</p>`;
+}
+
+/* =========================================================
+   RESEARCH
+========================================================= */
+
+function loadResearch() {
+  const container = document.getElementById("researchGrid");
+  if (!container) return;
+
+  const items = safeArray(portfolioData.research);
+  container.innerHTML = items.length
+    ? items.map((item, index) => `
+        <article class="research-card">
+          <span class="research-label">Research ${String(index + 1).padStart(2, "0")}</span>
+          <h3>
+            <a href="${safeURL(item.link)}" target="_blank" rel="noopener noreferrer">
+              ${escapeHTML(item.title)}
+            </a>
+          </h3>
+          <h4>${escapeHTML(item.fullTitle)}</h4>
+          <p>${escapeHTML(item.description)}</p>
+        </article>
+      `).join("")
+    : `<p class="empty-state">Research projects will be updated soon.</p>`;
+}
+
+/* =========================================================
+   PUBLICATIONS
+========================================================= */
+
+function loadPublications(type = "journals") {
+  const container = document.getElementById("publicationList");
+  if (!container) return;
+
+  const items = safeArray(portfolioData.publications?.[type]);
+  container.innerHTML = items.length
+    ? items.map(item => `
+        <article class="publication-card">
+          <div class="publication-year">${escapeHTML(item.year || "")}</div>
+          <div>
+            <h3 class="publication-title">
+              ${item.link
+                ? `<a href="${safeURL(item.link)}" target="_blank" rel="noopener noreferrer">${escapeHTML(item.title)}</a>`
+                : escapeHTML(item.title)}
+            </h3>
+            ${item.authors ? `<p class="publication-authors">${escapeHTML(item.authors)}</p>` : ""}
+            ${item.venue ? `<p class="publication-venue">${escapeHTML(item.venue)}${item.location ? " · " + escapeHTML(item.location) : ""}</p>` : ""}
+            ${item.date ? `<div class="publication-date">${escapeHTML(item.date)}</div>` : ""}
+          </div>
+        </article>
+      `).join("")
+    : `<p class="empty-state">No ${escapeHTML(type)} listed yet.</p>`;
+}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+function loadGallery() {
+  stopGalleryTimers();
+  renderGallery("events", document.getElementById("eventsGrid"));
+  renderGallery("tapeout", document.getElementById("tapeoutGrid"));
+}
+
+function renderGallery(type, container) {
+  if (!container) return;
+
+  const albums = safeArray(portfolioData.gallery?.[type]);
+
+  if (!albums.length) {
+    container.innerHTML = `<p class="empty-state">Gallery items will be updated soon.</p>`;
+    return;
+  }
+
+  container.innerHTML = albums.map((album, index) => {
+    const photos = safeArray(album.photos);
+    return `
+      <article class="gallery-card"
+               tabindex="0"
+               role="button"
+               data-gallery-type="${escapeHTML(type)}"
+               data-gallery-index="${index}"
+               aria-label="Open ${escapeHTML(album.title)}">
+        <div class="gallery-image">
+          <img src="${escapeHTML(photos[0] || "")}"
+               id="${type}-${index}"
+               alt="${escapeHTML(album.title)}"
+               loading="lazy">
+        </div>
+        <div class="gallery-info">
+          <h3>${escapeHTML(album.title)}</h3>
+          <p>${escapeHTML(album.location || "")}</p>
+          <span>${photos.length} ${photos.length === 1 ? "Photo" : "Photos"}</span>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  albums.forEach((album, index) => {
+    const photos = safeArray(album.photos);
+    if (photos.length < 2) return;
+
+    let photoIndex = 0;
+    const timer = setInterval(() => {
+      photoIndex = (photoIndex + 1) % photos.length;
+      const image = document.getElementById(`${type}-${index}`);
+      if (image) image.src = photos[photoIndex];
+    }, 3000);
+
+    galleryTimers.push(timer);
+  });
+}
+
+function stopGalleryTimers() {
+  galleryTimers.forEach(timer => clearInterval(timer));
+  galleryTimers = [];
+}
+
+function initLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const closeButton = document.getElementById("lightboxClose");
+
+  document.addEventListener("click", event => {
+    const card = event.target.closest(".gallery-card");
+    if (card) openAlbum(card.dataset.galleryType, Number(card.dataset.galleryIndex));
+  });
+
+  document.addEventListener("keydown", event => {
+    const card = event.target.closest(".gallery-card");
+
+    if (card && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      openAlbum(card.dataset.galleryType, Number(card.dataset.galleryIndex));
+    }
+
+    if (event.key === "Escape" && lightbox?.classList.contains("active")) {
+      closeLightbox();
+    }
+  });
+
+  closeButton?.addEventListener("click", closeLightbox);
+
+  lightbox?.addEventListener("click", event => {
+    if (event.target === lightbox) closeLightbox();
+  });
+}
+
+function openAlbum(type, index) {
+  const album = safeArray(portfolioData.gallery?.[type])[index];
+  const photos = safeArray(album?.photos);
+  if (!photos.length) return;
+
+  const lightbox = document.getElementById("lightbox");
+  const image = document.getElementById("lightboxImage");
+  const caption = document.getElementById("lightboxCaption");
+  if (!lightbox || !image) return;
+
+  currentAlbum = photos;
+  let photoIndex = 0;
+
+  image.src = currentAlbum[0];
+  image.alt = album.title || "Gallery image";
+  if (caption) caption.textContent = album.title || "";
+
+  lightbox.style.display = "flex";
+  lightbox.classList.add("active");
+  document.body.classList.add("lightbox-open");
+
+  clearInterval(lightboxTimer);
+
+  if (currentAlbum.length > 1) {
+    lightboxTimer = setInterval(() => {
+      photoIndex = (photoIndex + 1) % currentAlbum.length;
+      image.src = currentAlbum[photoIndex];
+    }, 3000);
+  }
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  clearInterval(lightboxTimer);
+  lightboxTimer = null;
+
+  if (lightbox) {
+    lightbox.style.display = "none";
+    lightbox.classList.remove("active");
+  }
+
+  document.body.classList.remove("lightbox-open");
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+function loadContact() {
+  const contact = portfolioData.contact || {};
+
+  setText("contactEmail", contact.email);
+  const email = document.getElementById("contactEmail");
+  if (email) email.href = contact.email ? `mailto:${contact.email}` : "#";
+
+  setText("contactPhone", contact.phone);
+  const phone = document.getElementById("contactPhone");
+  if (phone) phone.href = contact.phone ? `tel:${String(contact.phone).replace(/\s+/g, "")}` : "#";
+
+  setText("contactLocation", contact.location);
+
+  setExternalHref("linkedinLink", contact.linkedin);
+  setExternalHref("scholarLink", contact.googleScholar);
+  setExternalHref("footerLinkedin", contact.linkedin);
+  setExternalHref("footerScholar", contact.googleScholar);
+
+  const gmail = document.getElementById("gmailLink");
+  if (gmail) gmail.href = contact.email ? `mailto:${contact.email}` : "#";
+
+  const footerGmail = document.getElementById("footerGmail");
+  if (footerGmail) footerGmail.href = contact.email ? `mailto:${contact.email}` : "#";
+}
+
+/* =========================================================
+   OTHER
+========================================================= */
+
+function loadOther() {
+  const types = ["projects", "achievements", "activities"];
+
+  types.forEach(type => {
+    const container = document.getElementById(`${type}Grid`);
+    if (!container) return;
+
+    const items = safeArray(portfolioData[type]);
+    container.innerHTML = items.length
+      ? items.map(item => `
+          <article class="activity-card">
+            <h4>${escapeHTML(item.title || item.name || "Item")}</h4>
+            ${item.description ? `<p>${escapeHTML(item.description)}</p>` : ""}
+            ${item.date ? `<p class="activity-date">${escapeHTML(item.date)}</p>` : ""}
+          </article>
+        `).join("")
+      : `<p class="empty-state">No ${escapeHTML(type)} added yet.</p>`;
+  });
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showSection(id) {
+  const section = document.getElementById(id);
+  if (!section) return false;
+
+  $$(".page-section").forEach(item => item.classList.remove("active"));
+  section.classList.add("active");
+
+  $$(".nav-link").forEach(item => item.classList.remove("active"));
+  $(`.nav-link[href="#${CSS.escape(id)}"]`)?.classList.add("active");
+
+  closeMobileMenu();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  return true;
+}
+
+function initNavigation() {
+  $$('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", event => {
+      const id = link.getAttribute("href")?.slice(1);
+      if (!id || !document.getElementById(id)) return;
+
+      event.preventDefault();
+      showSection(id);
+
+      if (link.dataset.tab) activateEETab(link.dataset.tab);
+      if (link.dataset.publication) activatePublicationTab(link.dataset.publication);
+      if (link.dataset.other) activateOtherTab(link.dataset.other);
+      if (link.dataset.gallery) activateGalleryTab(link.dataset.gallery);
+    });
+  });
+}
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function initTabs() {
+  $$(".ee-tab").forEach(button => {
+    button.addEventListener("click", () => activateEETab(button.dataset.ee));
+  });
+
+  $$(".publication-tab").forEach(button => {
+    button.addEventListener("click", () => activatePublicationTab(button.dataset.pub));
+  });
+
+  $$(".gallery-tab").forEach(button => {
+    button.addEventListener("click", () => activateGalleryTab(button.dataset.gallery));
+  });
+
+  $$(".other-tab").forEach(button => {
+    button.addEventListener("click", () => activateOtherTab(button.dataset.other));
+  });
+}
+
+function activateEETab(type = "education") {
+  $$(".ee-tab").forEach(button => button.classList.toggle("active", button.dataset.ee === type));
+  $$(".ee-panel").forEach(panel => panel.classList.toggle("active", panel.id === `${type}Panel`));
+}
+
+function activatePublicationTab(type = "journals") {
+  currentPublication = type;
+  $$(".publication-tab").forEach(button => button.classList.toggle("active", button.dataset.pub === type));
+  loadPublications(type);
+}
+
+function activateGalleryTab(type = "events") {
+  $$(".gallery-tab").forEach(button => button.classList.toggle("active", button.dataset.gallery === type));
+  $$(".gallery-panel").forEach(panel => panel.classList.toggle("active", panel.id === `${type}Gallery`));
+}
+
+function activateOtherTab(type = "projects") {
+  $$(".other-tab").forEach(button => button.classList.toggle("active", button.dataset.other === type));
+  $$(".other-panel").forEach(panel => panel.classList.toggle("active", panel.id === `${type}Panel`));
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function initMobileMenu() {
+  const button = document.getElementById("menuBtn");
+  const nav = document.getElementById("navLinks");
+  if (!button || !nav) return;
+
+  button.addEventListener("click", () => {
+    const open = nav.classList.toggle("mobile-open");
+    button.setAttribute("aria-expanded", String(open));
+  });
+}
+
+function closeMobileMenu() {
+  const nav = document.getElementById("navLinks");
+  const button = document.getElementById("menuBtn");
+  nav?.classList.remove("mobile-open");
+  button?.setAttribute("aria-expanded", "false");
+}
+
+/* =========================================================
+   SCROLL TOP
+========================================================= */
+
+function initScrollTop() {
+  const button = document.getElementById("scrollTop");
+  if (!button) return;
+
+  window.addEventListener("scroll", () => {
+    button.style.display = window.scrollY > 300 ? "flex" : "none";
+  }, { passive: true });
+
+  button.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+function showLoadError() {
+  ["aboutBio", "educationTimeline", "experienceTimeline", "researchGrid",
+   "publicationList", "eventsGrid", "tapeoutGrid", "projectsGrid",
+   "achievementsGrid", "activitiesGrid"].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.innerHTML = `<p class="empty-state">Portfolio data could not be loaded. Please run the website using a local web server.</p>`;
+    }
+  });
 }
